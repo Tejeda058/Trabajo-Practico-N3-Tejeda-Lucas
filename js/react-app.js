@@ -53,7 +53,6 @@ function App() {
                     placeholder="Nombre"
                     value={formulario.nombre}
                     onChange={manejarCambio}
-                    required
                 />
 
                 <input
@@ -62,7 +61,6 @@ function App() {
                     placeholder="Apellido"
                     value={formulario.apellido}
                     onChange={manejarCambio}
-                    required
                 />
 
                 <input
@@ -71,7 +69,6 @@ function App() {
                     placeholder="Edad"
                     value={formulario.edad}
                     onChange={manejarCambio}
-                    required
                 />
 
                 <input
@@ -81,7 +78,6 @@ function App() {
                     placeholder="Altura"
                     value={formulario.altura}
                     onChange={manejarCambio}
-                    required
                 />
 
                 <input
@@ -91,10 +87,11 @@ function App() {
                     placeholder="Peso"
                     value={formulario.peso}
                     onChange={manejarCambio}
-                    required
                 />
 
-                <button type="submit">Agregar</button>
+                <button type="submit">
+                    Agregar
+                </button>
 
             </form>
 
@@ -116,13 +113,16 @@ function App() {
 
                     {personas.map((persona, index) => {
 
-                        const imc = (
-                            persona.peso /
-                            (persona.altura * persona.altura)
-                        ).toFixed(2);
+                        const altura = parseFloat(persona.altura);
+                        const peso = parseFloat(persona.peso);
+
+                        const imc = altura > 0
+                            ? (peso / (altura * altura)).toFixed(2)
+                            : 0;
 
                         return (
                             <tr key={index}>
+
                                 <td>{persona.nombre}</td>
                                 <td>{persona.apellido}</td>
                                 <td>{persona.edad}</td>
@@ -131,10 +131,13 @@ function App() {
                                 <td>{imc}</td>
 
                                 <td>
-                                    <button onClick={() => eliminarPersona(index)}>
+                                    <button
+                                        onClick={() => eliminarPersona(index)}
+                                    >
                                         Eliminar
                                     </button>
                                 </td>
+
                             </tr>
                         );
                     })}
